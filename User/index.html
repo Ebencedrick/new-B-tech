@@ -48,6 +48,29 @@
         <button id="search-close">Close</button>
       </div>
     </div>
+    <!-- Profile Popup HTML -->
+    <div class="profile-popup" id="profilePopup">
+      <h3>Sign Up</h3>
+      <form>
+        <input type="text" placeholder="Full Name" required />
+        <input type="email" placeholder="Email Address" required />
+        <input type="tel" placeholder="Phone Number" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Sign Up</button>
+      </form>
+      <p style="text-align: center; margin-top: 10px;">
+        Already have an account? <button id="loginButton" style="background: none; border: none; color: #2e86c1; cursor: pointer;">Login</button>
+      </p>
+    </div>
+    <!-- Login Popup HTML -->
+    <div class="login-popup" id="loginPopup">
+      <h3>Login</h3>
+      <form>
+        <input type="email" placeholder="Email Address" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+    </div>
     <section id="hero" class="hero-section">
       <div
         id="carouselExampleIndicators"
@@ -340,6 +363,23 @@
           alert(`Searching for: ${query}`);
           searchPopup.style.display = 'none';
         }
+      });
+    </script>
+    <script>
+      // JavaScript to toggle profile popup
+      const profileButton = document.querySelector('.profile-button');
+      const profilePopup = document.getElementById('profilePopup');
+
+      profileButton.addEventListener('click', () => {
+        profilePopup.classList.toggle('active');
+      });
+
+      const loginButton = document.getElementById('loginButton');
+      const loginPopup = document.getElementById('loginPopup');
+
+      loginButton.addEventListener('click', () => {
+        profilePopup.classList.remove('active'); // Close the sign-up popup
+        loginPopup.classList.toggle('active');
       });
     </script>
     <section id="contact" class="contact-section">
