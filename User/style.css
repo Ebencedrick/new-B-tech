@@ -1,0 +1,702 @@
+/* General styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Header styles */
+header {
+  height: 70px;
+  background-color: #2e86c1; /* Real estate themed blue */
+  color: white;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Bottom shadow */
+}
+
+/* Updated header styles */
+.header-container {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Adding spacing between header sections */
+.header-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px; /* Adding space between sections */
+}
+
+.logo-section {
+  justify-content: flex-start;
+}
+
+.nav-section {
+  justify-content: center;
+}
+
+.actions-section {
+  justify-content: flex-end;
+}
+
+.logo {
+  height: 50px;
+}
+
+.navigation {
+  flex: 1;
+  text-align: center;
+}
+
+.navigation ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation li {
+  margin: 0 15px;
+}
+
+.navigation a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.navigation a:hover {
+  color: #aed6f1; /* Lighter blue for hover effect */
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.search-button {
+  height: 40px;
+  width: 40px;
+  background-color: #aed6f1;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
+
+.search-button:hover {
+  background-color: #2e86c1;
+  color: white;
+}
+
+/* Profile button styles */
+.profile-button {
+    height: 40px;
+    width: 40px;
+    background-color: #aed6f1;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+}
+
+.profile-button:hover {
+    background-color: #2e86c1;
+    color: white;
+}
+
+.profile-icon {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-image: url('img/profile.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+/* Updated About Us section styles */
+.about-section {
+    padding: 50px 20px;
+    background-color: #ffffff; /* White background for contrast */
+}
+
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.about-text {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.about-text h2 {
+    font-size: 2.5em;
+    color: #2e86c1;
+    margin-bottom: 20px;
+}
+
+.about-text p {
+    font-size: 1.2em;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.about-image {
+    flex: 1;
+    text-align: center;
+}
+
+.about-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.about-full-text {
+    max-width: 1200px;
+    margin: 20px auto 0;
+    text-align: left;
+}
+
+.about-full-text p {
+    font-size: 1.2em;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Updated Contact Us section styles */
+.contact-section {
+    padding: 50px 20px;
+    background-color: #2e86c1; /* Blue background for contrast */
+    color: white; /* Text color for readability */
+}
+
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.contact-text {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.contact-text h2 {
+    font-size: 2.5em;
+    color: white; /* Ensure text is readable on blue background */
+    margin-bottom: 20px;
+}
+
+.contact-text p, .contact-text ul {
+    font-size: 1.2em;
+    color: white; /* Ensure text is readable on blue background */
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.contact-text ul {
+    list-style: none;
+    padding: 0;
+}
+
+.contact-text li {
+    margin-bottom: 10px;
+    color: white; /* Ensure text is readable on blue background */
+}
+
+.contact-image {
+    flex: 1;
+    text-align: center;
+}
+
+.contact-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Center and justify text for all sections */
+.about-text, .contact-text, .newsletter-container {
+    text-align: center;
+    text-justify: inter-word;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Newsletter section styles */
+.newsletter-section {
+    padding: 50px 20px;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+.newsletter-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.newsletter-section h2 {
+    font-size: 2.5em;
+    color: #2e86c1;
+    margin-bottom: 20px;
+}
+
+.newsletter-section p {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.newsletter-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.newsletter-form input {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 300px;
+}
+
+.newsletter-form button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #2e86c1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.newsletter-form button:hover {
+    background-color: #1b4f72;
+}
+
+/* Hero section styles */
+.hero-section {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-slider {
+    display: flex;
+    height: 100%;
+    width: 400%;
+    animation: slide 16s infinite; /* Total duration adjusted for 4 seconds per slide */
+}
+
+.slide {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+.slide-content h2 {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.slide-content p {
+    font-size: 1.5em;
+}
+
+@keyframes slide {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-100%); }
+    50% { transform: translateX(-200%); }
+    75% { transform: translateX(-300%); }
+    100% { transform: translateX(0); }
+}
+
+/* Centering text in carousel-caption */
+.carousel-caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+/* Styling for Top Houses section */
+.top-houses-section {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+/* Centering and adding spacing to the heading in Top Houses section */
+.top-houses-section h2 {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.top-houses-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* Display top-houses-container-inside as flex */
+.top-houses-container-inside {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.house {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  padding: 15px;
+  text-align: center;
+}
+
+.house-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.house h3 {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.house p {
+  font-size: 14px;
+  color: #555;
+  margin: 5px 0;
+}
+
+.house button {
+  background-color: #2e86c1;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.house button:hover {
+  background-color: #1b4f72;
+}
+
+.top-houses-container-inside .house:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Styling for Why Choose Us section */
+.why-choose-us-section {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+/* Centering and adding spacing to the heading in Why Choose Us section */
+.why-choose-us-section h2 {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.why-choose-us-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.why-choose-us-item {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  padding: 15px;
+  text-align: center;
+}
+
+.why-choose-us-item i {
+  color: #2e86c1;
+  margin-bottom: 10px;
+}
+
+.why-choose-us-item h3 {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.why-choose-us-item p {
+  font-size: 14px;
+  color: #555;
+}
+
+.why-choose-us-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Styling for What Do We Do section */
+.what-we-do-section {
+  padding: 50px 20px;
+  background-color: #f8f9fa;
+}
+
+.what-we-do-section h2 {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #2e86c1;
+}
+
+.what-we-do-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.what-we-do-item {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  width: 250px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.what-we-do-item i {
+  color: #2e86c1;
+  margin-bottom: 10px;
+}
+
+.what-we-do-item h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.what-we-do-item p {
+  font-size: 16px;
+  color: #555;
+}
+
+.what-we-do-item:nth-child(odd) {
+  background-color: #f8f9fa;
+}
+
+.what-we-do-item:nth-child(even) {
+  background-color: #e9ecef;
+}
+
+.what-we-do-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Styling for Footer Section */
+.footer-section {
+  background-color: #2e86c1;
+  color: #ffffff;
+  padding: 20px 0;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around;
+  padding: 0 20px;
+}
+
+.footer-about,
+.footer-links,
+.footer-contact,
+.footer-social {
+  width: 250px;
+}
+
+.footer-about h3,
+.footer-links h3,
+.footer-contact h3,
+.footer-social h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links ul li {
+  margin: 5px 0;
+}
+
+.footer-links ul li a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.footer-links ul li a:hover {
+  text-decoration: underline;
+}
+
+.footer-social .social-icons a {
+  color: #ffffff;
+  margin: 0 10px;
+  font-size: 20px;
+}
+
+.footer-social .social-icons a:hover {
+  color: #aed6f1;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.top-houses-container-inside .house h3,
+.top-houses-container-inside .house p,
+.why-choose-us-item h3,
+.why-choose-us-item p,
+.what-we-do-item h3,
+.what-we-do-item p {
+  font-weight: bold;
+}
+
+/* Popup search bar styles */
+.search-popup {
+  display: none;
+  position: absolute;
+  top: 70px; /* Below the header */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  background-color: #fff;
+  z-index: 1000;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.search-popup-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-popup-content input {
+  flex: 1;
+  margin-right: 10px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.search-popup-content button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #2e86c1;
+  color: #fff;
+  cursor: pointer;
+}
+
+.search-popup-content button:hover {
+  background-color: #1b4f72;
+}
+
+/* Leave a Review section styles */
+.leave-review {
+  margin-top: 10px; /* Reduced margin */
+  padding: 15px; /* Reduced padding */
+  background-color: rgb(213, 233, 242);
+  border-radius: 6px; /* Reduced border radius */
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1); /* Adjusted shadow */
+}
+
+.leave-review h3 {
+  font-size: 20px; /* Reduced font size */
+  margin-bottom: 8px; /* Reduced margin */
+  color: #2e86c1;
+}
+
+.review-form textarea {
+  width: 100%;
+  height: 80px; /* Reduced height */
+  padding: 8px; /* Reduced padding */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 8px; /* Reduced margin */
+}
+
+.review-form button {
+  padding: 8px 16px; /* Reduced padding */
+  border: none;
+  border-radius: 4px;
+  background-color: #2e86c1;
+  color: #fff;
+  cursor: pointer;
+}
+
+.review-form button:hover {
+  background-color: #1b4f72;
+}

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="dashboad.css">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    />
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuLinks = document.querySelectorAll('.sidebar nav ul li a');
+            const sections = document.querySelectorAll('.main-content section');
+
+            menuLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+
+                    // Remove active class from all links
+                    menuLinks.forEach(link => link.classList.remove('active'));
+
+                    // Add active class to clicked link
+                    link.classList.add('active');
+
+                    // Hide all sections
+                    sections.forEach(section => section.style.display = 'none');
+
+                    // Show the clicked section
+                    const targetId = link.getAttribute('href').substring(1);
+                    document.getElementById(targetId).style.display = 'block';
+                });
+            });
+
+            // Initialize by showing the first section
+            menuLinks[0].classList.add('active');
+            sections.forEach((section, index) => {
+                section.style.display = index === 0 ? 'block' : 'none';
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar Menu -->
+        <aside class="sidebar">
+            <h2>Admin Panel</h2>
+            <nav>
+                <ul>
+                    <li><a href="#dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="#properties"><i class="fas fa-building"></i> Manage Properties</a></li>
+                    <li><a href="#users"><i class="fas fa-users"></i> Manage Users</a></li>
+                    <li><a href="#agents"><i class="fas fa-user-tie"></i> Manage Agents</a></li>
+                    <li><a href="#analytics"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                    <li><a href="#settings"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <section id="dashboard">
+                <h1><i class="fas fa-tachometer-alt"></i> Dashboard Overview</h1>
+                <p>Welcome to the admin panel. Here you can manage properties, users, agents, and view analytics.</p>
+                
+                <div class="quick-stats-container">
+                    <div class="stat-box">
+                        <i class="fas fa-building"></i>
+                        <h3>Total Properties</h3>
+                        <p id="total-properties">120</p>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-users"></i>
+                        <h3>Total Users</h3>
+                        <p id="total-users">450</p>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-user-tie"></i>
+                        <h3>Total Agents</h3>
+                        <p id="total-agents">50</p>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Analysis Status</h3>
+                        <p id="analysis-status">Active</p>
+                    </div>
+                </div>
+                
+                <div class="demo">
+                    <h2>Recent Updates</h2>
+                    <ul id="recent-updates">
+                        <!-- Recent updates will be dynamically populated -->
+                    </ul>
+                </div>
+            </section>
+
+            <script>
+                const recentUpdates = [
+                    { section: 'Properties', update: 'Added a new property: Luxury Villa' },
+                    { section: 'Users', update: 'New user registered: John Doe' },
+                    { section: 'Agents', update: 'Agent approved: Alice Johnson' },
+                    { section: 'Analytics', update: 'Daily activities chart updated' },
+                ];
+
+                // Populate Recent Updates
+                function populateRecentUpdates() {
+                    const updatesList = document.getElementById('recent-updates');
+                    updatesList.innerHTML = '';
+                    recentUpdates.forEach(update => {
+                        const li = document.createElement('li');
+                        li.textContent = `${update.section}: ${update.update}`;
+                        updatesList.appendChild(li);
+                    });
+                }
+
+                // Populate dashboard stats and updates on page load
+                document.addEventListener('DOMContentLoaded', () => {
+                    document.getElementById('total-properties').textContent = '120';
+                    document.getElementById('total-users').textContent = '450';
+                    document.getElementById('total-agents').textContent = '50';
+                    document.getElementById('analysis-status').textContent = 'Active';
+                    populateRecentUpdates();
+                });
+            </script>
+
+            <section id="properties">
+                <h1><i class="fas fa-building"></i> Manage Properties</h1>
+                <p>Feature to add, edit, or delete property listings.</p>
+                <button onclick="openAddPropertyModal()" class="add-property-btn">Add Property</button>
+                <div class="demo">
+                    <h2>Property List</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Property ID</th>
+                                <th>Name</th>
+                                <th>Location</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="property-table-body">
+                            <!-- Property rows will be dynamically populated -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Add Property Modal -->
+            <div id="add-property-modal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <h2>Add New Property</h2>
+                    <form id="add-property-form">
+                        <label for="add-property-name">Property Name:</label>
+                        <input type="text" id="add-property-name" required />
+
+                        <label for="add-property-location">Location:</label>
+                        <input type="text" id="add-property-location" required />
+
+                        <label for="add-property-price">Price:</label>
+                        <input type="number" id="add-property-price" required />
+
+                        <label for="add-property-status">Status:</label>
+                        <select id="add-property-status" required>
+                            <option value="Available">Available</option>
+                            <option value="Sold">Sold</option>
+                        </select>
+
+                        <button type="submit" class="save-property-btn">Add Property</button>
+                        <button type="button" class="cancel-btn" onclick="closeAddPropertyModal()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Edit Property Modal -->
+            <div id="edit-property-modal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <h2>Edit Property</h2>
+                    <form id="edit-property-form">
+                        <label for="edit-property-name">Property Name:</label>
+                        <input type="text" id="edit-property-name" required />
+
+                        <label for="edit-property-location">Location:</label>
+                        <input type="text" id="edit-property-location" required />
+
+                        <label for="edit-property-price">Price:</label>
+                        <input type="number" id="edit-property-price" required />
+
+                        <label for="edit-property-status">Status:</label>
+                        <select id="edit-property-status" required>
+                            <option value="Available">Available</option>
+                            <option value="Sold">Sold</option>
+                        </select>
+
+                        <button type="submit" class="save-property-btn">Save Changes</button>
+                        <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+
+            <script>
+                const properties = [
+                    { id: 101, name: 'Luxury Villa', location: 'New York', price: 500000, status: 'Available' },
+                    { id: 102, name: 'Beach House', location: 'California', price: 750000, status: 'Sold' },
+                ];
+                let editIndex = null;
+
+                // Populate Properties
+                function populateProperties() {
+                    const propertyTableBody = document.getElementById('property-table-body');
+                    propertyTableBody.innerHTML = '';
+                    properties.forEach((property, index) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${property.id}</td>
+                            <td>${property.name}</td>
+                            <td>${property.location}</td>
+                            <td>${property.price}</td>
+                            <td>${property.status}</td>
+                            <td>
+                                <button onclick="openEditModal(${index})" class="edit-btn"><i class="fas fa-edit"></i> Edit</button>
+                                <button onclick="deleteProperty(${index})" class="delete-btn"><i class="fas fa-trash"></i> Delete</button>
+                            </td>
+                        `;
+                        propertyTableBody.appendChild(row);
+                    });
+                }
+
+                // Open Add Property Modal
+                function openAddPropertyModal() {
+                    document.getElementById('add-property-modal').style.display = 'flex';
+                }
+
+                // Close Add Property Modal
+                function closeAddPropertyModal() {
+                    document.getElementById('add-property-modal').style.display = 'none';
+                }
+
+                // Add New Property
+                document.getElementById('add-property-form').addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    const newProperty = {
+                        id: properties.length + 101,
+                        name: document.getElementById('add-property-name').value,
+                        location: document.getElementById('add-property-location').value,
+                        price: document.getElementById('add-property-price').value,
+                        status: document.getElementById('add-property-status').value,
+                    };
+                    properties.push(newProperty);
+                    closeAddPropertyModal();
+                    populateProperties();
+                });
+
+                // Open Edit Property Modal
+                function openEditModal(index) {
+                    editIndex = index;
+                    const property = properties[index];
+                    document.getElementById('edit-property-name').value = property.name;
+                    document.getElementById('edit-property-location').value = property.location;
+                    document.getElementById('edit-property-price').value = property.price;
+                    document.getElementById('edit-property-status').value = property.status;
+                    document.getElementById('edit-property-modal').style.display = 'flex';
+                }
+
+                // Close Edit Property Modal
+                function closeEditModal() {
+                    document.getElementById('edit-property-modal').style.display = 'none';
+                }
+
+                // Save Edited Property
+                document.getElementById('edit-property-form').addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    const updatedProperty = {
+                        name: document.getElementById('edit-property-name').value,
+                        location: document.getElementById('edit-property-location').value,
+                        price: document.getElementById('edit-property-price').value,
+                        status: document.getElementById('edit-property-status').value,
+                    };
+                    properties[editIndex] = { ...properties[editIndex], ...updatedProperty };
+                    closeEditModal();
+                    populateProperties();
+                });
+
+                // Delete Property
+                function deleteProperty(index) {
+                    properties.splice(index, 1);
+                    populateProperties();
+                }
+
+                // Populate properties on page load
+                document.addEventListener('DOMContentLoaded', populateProperties);
+            </script>
+
+            <section id="users">
+                <h1><i class="fas fa-users"></i> Manage Users</h1>
+                <p>Feature to manage user accounts, view reviews, messages, and list users with their locations.</p>
+                
+                <div class="demo">
+                    <h2>User List</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Name</th>
+                                <th>Location</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-table-body">
+                            <!-- User rows will be dynamically populated -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="demo">
+                    <h2>User Reviews</h2>
+                    <ul id="user-reviews">
+                        <!-- User reviews will be dynamically populated -->
+                    </ul>
+                </div>
+
+                <div class="demo">
+                    <h2>Messages from Users</h2>
+                    <ul id="user-messages">
+                        <!-- User messages will be dynamically populated -->
+                    </ul>
+                </div>
+            </section>
+
+            <script>
+                const users = [
+                    { id: 1, name: 'John Doe', location: 'New York', role: 'Admin' },
+                    { id: 2, name: 'Jane Smith', location: 'California', role: 'Agent' },
+                    { id: 3, name: 'Michael Brown', location: 'Texas', role: 'Customer' },
+                ];
+
+                const reviews = [
+                    { userId: 1, review: 'Great platform for managing properties.' },
+                    { userId: 2, review: 'Easy to use and very efficient.' },
+                ];
+
+                const messages = [
+                    { userId: 3, message: 'Can you help me with my account setup?' },
+                    { userId: 2, message: 'I need assistance with property listings.' },
+                ];
+
+                // Populate User List
+                function populateUsers() {
+                    const userTableBody = document.getElementById('user-table-body');
+                    userTableBody.innerHTML = '';
+                    users.forEach(user => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${user.id}</td>
+                            <td>${user.name}</td>
+                            <td>${user.location}</td>
+                            <td>${user.role}</td>
+                        `;
+                        userTableBody.appendChild(row);
+                    });
+                }
+
+                // Populate User Reviews
+                function populateReviews() {
+                    const userReviews = document.getElementById('user-reviews');
+                    userReviews.innerHTML = '';
+                    reviews.forEach(review => {
+                        const li = document.createElement('li');
+                        li.textContent = `User ID ${review.userId}: ${review.review}`;
+                        userReviews.appendChild(li);
+                    });
+                }
+
+                // Populate User Messages
+                function populateMessages() {
+                    const userMessages = document.getElementById('user-messages');
+                    userMessages.innerHTML = '';
+                    messages.forEach(message => {
+                        const li = document.createElement('li');
+                        li.textContent = `User ID ${message.userId}: ${message.message}`;
+                        userMessages.appendChild(li);
+                    });
+                }
+
+                // Populate all components on page load
+                document.addEventListener('DOMContentLoaded', () => {
+                    populateUsers();
+                    populateReviews();
+                    populateMessages();
+                });
+            </script>
+
+            <section id="agents">
+                <h1><i class="fas fa-user-tie"></i> Manage Agents</h1>
+                <p>View and manage all agents in the system, including approved, canceled, and pending requests.</p>
+                
+                <div class="filter-buttons">
+                    <button onclick="filterAgents('all')" class="filter-btn">All</button>
+                    <button onclick="filterAgents('approved')" class="filter-btn">Approved</button>
+                    <button onclick="filterAgents('pending')" class="filter-btn">Pending</button>
+                    <button onclick="filterAgents('canceled')" class="filter-btn">Canceled</button>
+                </div>
+                
+                <div class="demo">
+                    <h2>Agent List</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Agent ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="agent-table-body">
+                            <!-- Agent rows will be dynamically populated -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <script>
+                const agents = [
+                    { id: 1, name: 'Alice Johnson', email: 'alice@example.com', status: 'approved' },
+                    { id: 2, name: 'Bob Smith', email: 'bob@example.com', status: 'pending' },
+                    { id: 3, name: 'Charlie Brown', email: 'charlie@example.com', status: 'canceled' },
+                    { id: 4, name: 'Diana Prince', email: 'diana@example.com', status: 'approved' },
+                ];
+
+                // Populate Agents
+                function populateAgents(filter = 'all') {
+                    const agentTableBody = document.getElementById('agent-table-body');
+                    agentTableBody.innerHTML = '';
+                    const filteredAgents = filter === 'all' ? agents : agents.filter(agent => agent.status === filter);
+                    filteredAgents.forEach(agent => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${agent.id}</td>
+                            <td>${agent.name}</td>
+                            <td>${agent.email}</td>
+                            <td>${agent.status}</td>
+                        `;
+                        agentTableBody.appendChild(row);
+                    });
+                }
+
+                // Filter Agents
+                function filterAgents(status) {
+                    populateAgents(status);
+                }
+
+                // Populate agents on page load
+                document.addEventListener('DOMContentLoaded', () => populateAgents());
+            </script>
+
+            <section id="analytics">
+                <h1><i class="fas fa-chart-line"></i> Analytics</h1>
+                <p>View statistics and reports about the platform.</p>
+                
+                <div class="demo">
+                    <h2>Daily Activities</h2>
+                    <canvas id="daily-activities-chart" width="400" height="200"></canvas>
+                </div>
+                
+                <div class="demo">
+                    <h2>Monthly Activities</h2>
+                    <canvas id="monthly-activities-chart" width="400" height="200"></canvas>
+                </div>
+                
+                <div class="demo">
+                    <h2>Analysis Explanation</h2>
+                    <p>The daily activities chart provides insights into the system's usage on a day-to-day basis, helping identify peak activity days. The monthly activities chart aggregates data to show trends over the month, aiding in long-term planning and performance evaluation.</p>
+                </div>
+            </section>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    // Daily Activities Chart
+                    const dailyCtx = document.getElementById('daily-activities-chart').getContext('2d');
+                    const dailyActivitiesChart = new Chart(dailyCtx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                            datasets: [
+                                {
+                                    label: 'Daily Activities',
+                                    data: [120, 150, 180, 200, 170, 140, 100],
+                                    backgroundColor: [
+                                        '#007bff',
+                                        '#28a745',
+                                        '#ffc107',
+                                        '#dc3545',
+                                        '#17a2b8',
+                                        '#6c757d',
+                                        '#343a40',
+                                    ],
+                                    borderColor: [
+                                        '#0056b3',
+                                        '#218838',
+                                        '#e0a800',
+                                        '#c82333',
+                                        '#138496',
+                                        '#5a6268',
+                                        '#23272b',
+                                    ],
+                                    borderWidth: 1,
+                                },
+                            ],
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'top',
+                                },
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                },
+                            },
+                        },
+                    });
+
+                    // Monthly Activities Chart
+                    const monthlyCtx = document.getElementById('monthly-activities-chart').getContext('2d');
+                    const monthlyActivitiesChart = new Chart(monthlyCtx, {
+                        type: 'line',
+                        data: {
+                            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                            datasets: [
+                                {
+                                    label: 'Monthly Activities',
+                                    data: [500, 700, 800, 600],
+                                    backgroundColor: 'rgba(23, 162, 184, 0.2)',
+                                    borderColor: '#17a2b8',
+                                    borderWidth: 2,
+                                    fill: true,
+                                },
+                            ],
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'top',
+                                },
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                },
+                            },
+                        },
+                    });
+                });
+            </script>
+            <section id="settings">
+                <h1><i class="fas fa-cog"></i> Settings</h1>
+                <p>Configure admin settings and preferences.</p>
+                <div class="demo">
+                    <h2>Preferences</h2>
+                    <p>Change theme, update profile, and manage notifications.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
