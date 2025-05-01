@@ -13,6 +13,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="houses-for-rent.css">
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
       defer
@@ -63,38 +64,115 @@
     <section id="houses-for-rent" class="houses-section">
       <h2>Houses for Rent</h2>
       <div class="houses-container">
-        <!-- Example of a house item -->
         <div class="house-item">
-          <img
-            src="img/comp24.jpg"
-            alt="House Image"
-            class="house-main-image"
-          />
+          <img src="img/comp24.jpg" alt="House Image" class="house-main-image" />
           <h3>Cozy Cottage</h3>
           <p>$850/month</p>
           <p>Aspen, CO</p>
-          <p>
-            Beautiful cottage with modern amenities and a serene environment.
-          </p>
-          <button class="like-button">❤️ Like</button>
-          <button class="see-more-button" onclick="showMoreImages(1)">
-            See More
-          </button>
-          <div
-            class="additional-images"
-            id="additional-images-1"
-            style="display: none"
-          >
-            <img src="img/comp27.jpg" alt="Additional Image 1" />
-            <img src="img/comp28.jpg" alt="Additional Image 2" />
-            <img src="img/comp45.jpg" alt="Additional Image 3" />
-          </div>
+          <p>Beautiful cottage with modern amenities and a serene environment.</p>
+          <button class="like-button" onclick="toggleLike(this)"><i class="fas fa-heart"></i></button>
+          <button class="see-more-button" onclick="showMoreImages(1)">See More</button>
         </div>
-        <!-- Repeat similar structure for other houses -->
+        <div class="house-item">
+          <img src="img/comp27.jpg" alt="House Image" class="house-main-image" />
+          <h3>Modern Apartment</h3>
+          <p>$1,200/month</p>
+          <p>New York, NY</p>
+          <p>Stylish apartment in the heart of the city with great amenities.</p>
+          <button class="like-button" onclick="toggleLike(this)"><i class="fas fa-heart"></i></button>
+          <button class="see-more-button" onclick="showMoreImages(2)">See More</button>
+        </div>
+        <div class="house-item">
+          <img src="img/comp28.jpg" alt="House Image" class="house-main-image" />
+          <h3>Beach House</h3>
+          <p>$2,500/month</p>
+          <p>Miami, FL</p>
+          <p>Relaxing beach house with stunning ocean views and modern design.</p>
+          <button class="like-button" onclick="toggleLike(this)"><i class="fas fa-heart"></i></button>
+          <button class="see-more-button" onclick="showMoreImages(3)">See More</button>
+        </div>
+        <div class="house-item">
+          <img src="img/comp45.jpg" alt="House Image" class="house-main-image" />
+          <h3>Luxury Villa</h3>
+          <p>$5,000/month</p>
+          <p>Beverly Hills, CA</p>
+          <p>Elegant villa with spacious rooms and a private pool.</p>
+          <button class="like-button" onclick="toggleLike(this)"><i class="fas fa-heart"></i></button>
+          <button class="see-more-button" onclick="showMoreImages(4)">See More</button>
+        </div>
+        <div class="house-item">
+          <img src="img/comp10.jpg" alt="House Image" class="house-main-image" />
+          <h3>Suburban Home</h3>
+          <p>$1,800/month</p>
+          <p>Dallas, TX</p>
+          <p>Comfortable home in a quiet neighborhood with a large backyard.</p>
+          <button class="like-button" onclick="toggleLike(this)"><i class="fas fa-heart"></i></button>
+          <button class="see-more-button" onclick="showMoreImages(5)">See More</button>
+        </div>
+        <div class="house-item">
+          <img src="img/comp24.jpg" alt="House Image" class="house-main-image" />
+          <h3>Mountain Cabin</h3>
+          <p>$950/month</p>
+          <p>Denver, CO</p>
+          <p>Cozy cabin with breathtaking mountain views and rustic charm.</p>
+          <button class="like-button" onclick="toggleLike(this)"><i class="fas fa-heart"></i></button>
+          <button class="see-more-button" onclick="showMoreImages(6)">See More</button>
+        </div>
+        <div class="house-item">
+          <img src="img/comp27.jpg" alt="House Image" class="house-main-image" />
+          <h3>City Loft</h3>
+          <p>$1,500/month</p>
+          <p>Chicago, IL</p>
+          <p>Modern loft with open spaces and a great city view.</p>
+          <button class="like-button" onclick="toggleLike(this)"><i class="fas fa-heart"></i></button>
+          <button class="see-more-button" onclick="showMoreImages(7)">See More</button>
+        </div>
+        <div class="house-item">
+          <img src="img/comp28.jpg" alt="House Image" class="house-main-image" />
+          <h3>Lake House</h3>
+          <p>$2,200/month</p>
+          <p>Lake Tahoe, CA</p>
+          <p>Beautiful lake house with serene surroundings and water activities.</p>
+          <button class="like-button" onclick="toggleLike(this)"><i class="fas fa-heart"></i></button>
+          <button class="see-more-button" onclick="showMoreImages(8)">See More</button>
+        </div>
+        <div class="house-item">
+          <img src="img/comp45.jpg" alt="House Image" class="house-main-image" />
+          <h3>Country Estate</h3>
+          <p>$3,000/month</p>
+          <p>Nashville, TN</p>
+          <p>Spacious estate with lush greenery and luxurious interiors.</p>
+          <button class="like-button" onclick="toggleLike(this)"><i class="fas fa-heart"></i></button>
+          <button class="see-more-button" onclick="showMoreImages(9)">See More</button>
+        </div>
+        <div class="house-item">
+          <img src="img/comp10.jpg" alt="House Image" class="house-main-image" />
+          <h3>Historic Mansion</h3>
+          <p>$4,500/month</p>
+          <p>Charleston, SC</p>
+          <p>Elegant mansion with historic charm and modern upgrades.</p>
+          <button class="like-button" onclick="toggleLike(this)"><i class="fas fa-heart"></i></button>
+          <button class="see-more-button" onclick="showMoreImages(10)">See More</button>
+        </div>
+        <div class="house-item">
+          <img src="img/comp24.jpg" alt="House Image" class="house-main-image" />
+          <h3>Studio Apartment</h3>
+          <p>$750/month</p>
+          <p>San Francisco, CA</p>
+          <p>Compact studio with modern amenities and a great location.</p>
+          <button class="like-button" onclick="toggleLike(this)"><i class="fas fa-heart"></i></button>
+          <button class="see-more-button" onclick="showMoreImages(11)">See More</button>
+        </div>
+        <div class="house-item">
+          <img src="img/comp27.jpg" alt="House Image" class="house-main-image" />
+          <h3>Farmhouse</h3>
+          <p>$1,100/month</p>
+          <p>Portland, OR</p>
+          <p>Charming farmhouse with a large garden and peaceful surroundings.</p>
+          <button class="like-button" onclick="toggleLike(this)"><i class="fas fa-heart"></i></button>
+          <button class="see-more-button" onclick="showMoreImages(12)">See More</button>
+        </div>
       </div>
-      <button class="view-all-button" onclick="viewAllHouses()">
-        View All
-      </button>
     </section>
 
     <div id="search-popup" class="search-popup">
@@ -181,15 +259,18 @@
     </footer>
     <script>
       function showMoreImages(houseId) {
-        const imagesContainer = document.getElementById(
-          `additional-images-${houseId}`
-        );
-        imagesContainer.style.display = "block";
+        alert(`Displaying more images for house ID: ${houseId}`);
       }
 
-      function viewAllHouses() {
-        // Logic to display all 16 houses
-        alert("Displaying all houses for rent.");
+      function toggleLike(button) {
+        const icon = button.querySelector('i');
+        if (icon.classList.contains('liked')) {
+          icon.classList.remove('liked');
+          icon.style.color = 'white';
+        } else {
+          icon.classList.add('liked');
+          icon.style.color = 'red';
+        }
       }
 
       const searchPopup = document.getElementById("search-popup");
