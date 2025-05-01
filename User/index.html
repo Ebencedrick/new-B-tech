@@ -30,7 +30,7 @@
             <ul>
               <li><a href="#home">Home</a></li>
               <li><a href="#about">About Us</a></li>
-              <li><a href="#properties">Properties</a></li>
+              <li><a href="property.html">Properties</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
           </nav>
@@ -43,7 +43,11 @@
     </header>
     <div id="search-popup" class="search-popup">
       <div class="search-popup-content">
-        <input type="text" id="search-input" placeholder="Enter your search query" />
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Enter your search query"
+        />
         <button id="search-submit">Search</button>
         <button id="search-close">Close</button>
       </div>
@@ -58,9 +62,31 @@
         <input type="password" placeholder="Password" required />
         <button type="submit">Sign Up</button>
       </form>
-      <button id="cancelSignUp" style="background: none; border: none; color: #e74c3c; cursor: pointer; margin-top: 10px;">Cancel</button>
-      <p style="text-align: center; margin-top: 10px;">
-        Already have an account? <button id="loginButton" style="background: none; border: none; color: #2e86c1; cursor: pointer;">Login</button>
+      <button
+        id="cancelSignUp"
+        style="
+          background: none;
+          border: none;
+          color: #e74c3c;
+          cursor: pointer;
+          margin-top: 10px;
+        "
+      >
+        Cancel
+      </button>
+      <p style="text-align: center; margin-top: 10px">
+        Already have an account?
+        <button
+          id="loginButton"
+          style="
+            background: none;
+            border: none;
+            color: #2e86c1;
+            cursor: pointer;
+          "
+        >
+          Login
+        </button>
       </p>
     </div>
     <!-- Login Popup HTML -->
@@ -71,9 +97,30 @@
         <input type="password" placeholder="Password" required />
         <button type="submit">Login</button>
       </form>
-      <button id="cancelLogin" style="background: none; border: none; color: #e74c3c; cursor: pointer; margin-top: 10px;">Cancel</button>
-      <p style="text-align: center; margin-top: 10px;">
-        <button id="adminLoginButton" style="background: none; border: none; color: #2e86c1; cursor: pointer;">Login as Admin</button>
+      <button
+        id="cancelLogin"
+        style="
+          background: none;
+          border: none;
+          color: #e74c3c;
+          cursor: pointer;
+          margin-top: 10px;
+        "
+      >
+        Cancel
+      </button>
+      <p style="text-align: center; margin-top: 10px">
+        <button
+          id="adminLoginButton"
+          style="
+            background: none;
+            border: none;
+            color: #2e86c1;
+            cursor: pointer;
+          "
+        >
+          Login as Admin
+        </button>
       </p>
     </div>
     <!-- Admin Login Popup HTML -->
@@ -84,7 +131,18 @@
         <input type="password" placeholder="Admin Password" required />
         <button type="submit">Login as Admin</button>
       </form>
-      <button id="cancelAdminLogin" style="background: none; border: none; color: #e74c3c; cursor: pointer; margin-top: 10px;">Cancel</button>
+      <button
+        id="cancelAdminLogin"
+        style="
+          background: none;
+          border: none;
+          color: #e74c3c;
+          cursor: pointer;
+          margin-top: 10px;
+        "
+      >
+        Cancel
+      </button>
     </div>
     <section id="hero" class="hero-section">
       <div
@@ -122,31 +180,55 @@
         </div>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="img/comp10.jpg" class="d-block w-100" alt="Discover Your Dream Home">
+            <img
+              src="img/comp10.jpg"
+              class="d-block w-100"
+              alt="Discover Your Dream Home"
+            />
             <div class="carousel-caption d-none d-md-block">
               <h5>Discover Your Dream Home</h5>
-              <p>Explore our exclusive listings and find the perfect property for you.</p>
+              <p>
+                Explore our exclusive listings and find the perfect property for
+                you.
+              </p>
             </div>
           </div>
           <div class="carousel-item">
-            <img src="img/comp24.jpg" class="d-block w-100" alt="Upcoming Open Houses">
+            <img
+              src="img/comp24.jpg"
+              class="d-block w-100"
+              alt="Upcoming Open Houses"
+            />
             <div class="carousel-caption d-none d-md-block">
               <h5>Upcoming Open Houses</h5>
-              <p>Join us for open house events and experience properties firsthand.</p>
+              <p>
+                Join us for open house events and experience properties
+                firsthand.
+              </p>
             </div>
           </div>
           <div class="carousel-item">
-            <img src="img/comp27.jpg" class="d-block w-100" alt="Special Promotions">
+            <img
+              src="img/comp27.jpg"
+              class="d-block w-100"
+              alt="Special Promotions"
+            />
             <div class="carousel-caption d-none d-md-block">
               <h5>Special Promotions</h5>
               <p>Take advantage of limited-time offers on select properties.</p>
             </div>
           </div>
           <div class="carousel-item">
-            <img src="img/comp28.jpg" class="d-block w-100" alt="Market Insights">
+            <img
+              src="img/comp28.jpg"
+              class="d-block w-100"
+              alt="Market Insights"
+            />
             <div class="carousel-caption d-none d-md-block">
               <h5>Market Insights</h5>
-              <p>Stay informed with the latest trends and updates in real estate.</p>
+              <p>
+                Stay informed with the latest trends and updates in real estate.
+              </p>
             </div>
           </div>
         </div>
@@ -175,11 +257,7 @@
         <h2>TOP HOUSES</h2>
         <div class="top-houses-container-inside">
           <div class="house">
-            <img
-              src="img/comp28.jpg"
-              alt="Luxury Villa"
-              class="house-image"
-            />
+            <img src="img/comp28.jpg" alt="Luxury Villa" class="house-image" />
             <h3>House Name: Luxury Villa</h3>
             <p>Location: Beverly Hills, CA</p>
             <p>Price: $2,500,000</p>
@@ -187,11 +265,7 @@
             <button onclick="viewDetails('Luxury Villa')">See More</button>
           </div>
           <div class="house">
-            <img
-              src="img/comp27.jpg"
-              alt="Cozy Cottage"
-              class="house-image"
-            />
+            <img src="img/comp27.jpg" alt="Cozy Cottage" class="house-image" />
             <h3>House Name: Cozy Cottage</h3>
             <p>Location: Aspen, CO</p>
             <p>Price: $850,000</p>
@@ -225,11 +299,7 @@
             </button>
           </div>
           <div class="house">
-            <img
-              src="img/14.png"
-              alt="Suburban Home"
-              class="house-image"
-            />
+            <img src="img/14.png" alt="Suburban Home" class="house-image" />
             <h3>House Name: Suburban Home</h3>
             <p>Location: Dallas, TX</p>
             <p>Price: $600,000</p>
@@ -359,65 +429,65 @@
       }
     </script>
     <script>
-      const searchPopup = document.getElementById('search-popup');
-      const searchInput = document.getElementById('search-input');
-      const searchSubmit = document.getElementById('search-submit');
-      const searchClose = document.getElementById('search-close');
+      const searchPopup = document.getElementById("search-popup");
+      const searchInput = document.getElementById("search-input");
+      const searchSubmit = document.getElementById("search-submit");
+      const searchClose = document.getElementById("search-close");
 
-      document.querySelector('.search-button').addEventListener('click', () => {
-        searchPopup.style.display = 'block';
+      document.querySelector(".search-button").addEventListener("click", () => {
+        searchPopup.style.display = "block";
       });
 
-      searchClose.addEventListener('click', () => {
-        searchPopup.style.display = 'none';
+      searchClose.addEventListener("click", () => {
+        searchPopup.style.display = "none";
       });
 
-      searchSubmit.addEventListener('click', () => {
+      searchSubmit.addEventListener("click", () => {
         const query = searchInput.value;
         if (query) {
           alert(`Searching for: ${query}`);
-          searchPopup.style.display = 'none';
+          searchPopup.style.display = "none";
         }
       });
     </script>
     <script>
       // JavaScript to toggle profile popup
-      const profileButton = document.querySelector('.profile-button');
-      const profilePopup = document.getElementById('profilePopup');
+      const profileButton = document.querySelector(".profile-button");
+      const profilePopup = document.getElementById("profilePopup");
 
-      profileButton.addEventListener('click', () => {
-        profilePopup.classList.toggle('active');
+      profileButton.addEventListener("click", () => {
+        profilePopup.classList.toggle("active");
       });
 
-      const loginButton = document.getElementById('loginButton');
-      const loginPopup = document.getElementById('loginPopup');
+      const loginButton = document.getElementById("loginButton");
+      const loginPopup = document.getElementById("loginPopup");
 
-      loginButton.addEventListener('click', () => {
-        profilePopup.classList.remove('active'); // Close the sign-up popup
-        loginPopup.classList.toggle('active');
+      loginButton.addEventListener("click", () => {
+        profilePopup.classList.remove("active"); // Close the sign-up popup
+        loginPopup.classList.toggle("active");
       });
 
-      const adminLoginButton = document.getElementById('adminLoginButton');
-      const adminLoginPopup = document.getElementById('adminLoginPopup');
+      const adminLoginButton = document.getElementById("adminLoginButton");
+      const adminLoginPopup = document.getElementById("adminLoginPopup");
 
-      adminLoginButton.addEventListener('click', () => {
-        loginPopup.classList.remove('active'); // Close the user login popup
-        adminLoginPopup.classList.toggle('active');
+      adminLoginButton.addEventListener("click", () => {
+        loginPopup.classList.remove("active"); // Close the user login popup
+        adminLoginPopup.classList.toggle("active");
       });
 
-      const cancelSignUp = document.getElementById('cancelSignUp');
-      cancelSignUp.addEventListener('click', () => {
-        profilePopup.classList.remove('active');
+      const cancelSignUp = document.getElementById("cancelSignUp");
+      cancelSignUp.addEventListener("click", () => {
+        profilePopup.classList.remove("active");
       });
 
-      const cancelLogin = document.getElementById('cancelLogin');
-      cancelLogin.addEventListener('click', () => {
-        loginPopup.classList.remove('active');
+      const cancelLogin = document.getElementById("cancelLogin");
+      cancelLogin.addEventListener("click", () => {
+        loginPopup.classList.remove("active");
       });
 
-      const cancelAdminLogin = document.getElementById('cancelAdminLogin');
-      cancelAdminLogin.addEventListener('click', () => {
-        adminLoginPopup.classList.remove('active');
+      const cancelAdminLogin = document.getElementById("cancelAdminLogin");
+      cancelAdminLogin.addEventListener("click", () => {
+        adminLoginPopup.classList.remove("active");
       });
     </script>
     <section id="contact" class="contact-section">
