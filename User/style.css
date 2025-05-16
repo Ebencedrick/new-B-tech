@@ -885,3 +885,50 @@ button#cancelAdminLogin:hover {
 .review-form button:hover {
   background-color: #1b4f72;
 }
+
+/* Styles for the agents section */
+.agents-section {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.agents-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.agent-card {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.agent-card:hover {
+  transform: scale(1.05);
+}
+
+.agent-card img {
+  width: 100%;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.contact-button {
+  background-color: #2e86c1;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.contact-button:hover {
+  background-color: #1b4f72;
+}
