@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Details</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      defer
+    ></script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-section logo-section">
+                <img src="img/logo.jpg" alt="Real Estate Logo" class="logo" />
+            </div>
+            <div class="header-section nav-section">
+                <nav class="navigation">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="property.html">Properties</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="header-section actions-section">
+                <button class="search-button"><i class="fas fa-search"></i></button>
+                <button class="profile-button"><i class="fas fa-user"></i></button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section id="property-images" class="property-images-section">
+            <h2>Property Images</h2>
+            <div class="images-container">
+                <img src="img/comp24.jpg" alt="Property Image 1" class="property-image" />
+                <img src="img/comp27.jpg" alt="Property Image 2" class="property-image" />
+                <img src="img/comp28.jpg" alt="Property Image 3" class="property-image" />
+            </div>
+        </section>
+    </main>
+    <footer class="footer-section">
+        <div class="footer-container">
+            <div class="footer-about">
+                <h3>About Us</h3>
+                <p>
+                    We are dedicated to helping you find your dream property. Explore
+                    our listings and let us assist you in making your real estate dreams
+                    come true.
+                </p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#properties">Properties</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <p>Email: support@realestate.com</p>
+                <p>Phone: +1 (123) 456-7890</p>
+                <p>Address: 123 Real Estate Street, City, Country</p>
+            </div>
+            <div class="footer-social">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Real Estate Website. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+      const searchPopup = document.getElementById("search-popup");
+      const searchInput = document.getElementById("search-input");
+      const searchSubmit = document.getElementById("search-submit");
+      const searchClose = document.getElementById("search-close");
+
+      document.querySelector(".search-button").addEventListener("click", () => {
+        searchPopup.style.display = "block";
+      });
+
+      searchClose.addEventListener("click", () => {
+        searchPopup.style.display = "none";
+      });
+
+      searchSubmit.addEventListener("click", () => {
+        const query = searchInput.value;
+        if (query) {
+          alert(`Searching for: ${query}`);
+          searchPopup.style.display = "none";
+        }
+      });
+
+      const profilePopup = document.getElementById("profilePopup");
+      const profileButton = document.querySelector(".profile-button");
+      const cancelSignUp = document.getElementById("cancelSignUp");
+      const cancelLogin = document.getElementById("cancelLogin");
+      const loginButton = document.getElementById("loginButton");
+      const signUpButton = document.getElementById("signUpButton");
+      const signUpForm = document.getElementById("signUpForm");
+      const loginForm = document.getElementById("loginForm");
+
+      profileButton.addEventListener("click", () => {
+        profilePopup.style.display = "block";
+        signUpForm.style.display = "block";
+        loginForm.style.display = "none";
+      });
+
+      cancelSignUp.addEventListener("click", () => {
+        profilePopup.style.display = "none";
+      });
+
+      cancelLogin.addEventListener("click", () => {
+        profilePopup.style.display = "none";
+      });
+
+      loginButton.addEventListener("click", () => {
+        signUpForm.style.display = "none";
+        loginForm.style.display = "block";
+      });
+
+      signUpButton.addEventListener("click", () => {
+        loginForm.style.display = "none";
+        signUpForm.style.display = "block";
+      });
+    </script>
+
+    <div id="search-popup" class="search-popup">
+      <div class="search-popup-content">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Enter your search query"
+        />
+        <button id="search-submit">Search</button>
+        <button id="search-close">Close</button>
+      </div>
+    </div>
+
+    <div class="profile-popup" id="profilePopup" style="display: none;">
+      <div id="signUpForm">
+        <h3>Sign Up</h3>
+        <form>
+          <input type="text" placeholder="Full Name" required />
+          <input type="email" placeholder="Email Address" required />
+          <input type="tel" placeholder="Phone Number" required />
+          <input type="password" placeholder="Password" required />
+          <button type="submit">Sign Up</button>
+        </form>
+        <button id="cancelSignUp" style="background: none; border: none; color: #e74c3c; cursor: pointer; margin-top: 10px;">Cancel</button>
+        <p style="text-align: center; margin-top: 10px">
+          Already have an account?
+          <button id="loginButton" style="background: none; border: none; color: #2e86c1; cursor: pointer;">Login</button>
+        </p>
+      </div>
+      <div id="loginForm" style="display: none;">
+        <h3>Login</h3>
+        <form>
+          <input type="email" placeholder="Email Address" required />
+          <input type="password" placeholder="Password" required />
+          <button type="submit">Login</button>
+        </form>
+        <button id="cancelLogin" style="background: none; border: none; color: #e74c3c; cursor: pointer; margin-top: 10px;">Cancel</button>
+        <p style="text-align: center; margin-top: 10px">
+          Don't have an account?
+          <button id="signUpButton" style="background: none; border: none; color: #2e86c1; cursor: pointer;">Sign Up</button>
+        </p>
+      </div>
+    </div>
+</body>
+</html>
