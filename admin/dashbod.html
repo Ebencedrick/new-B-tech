@@ -633,25 +633,14 @@
 </html>
 <script src="../User/chat-sim.js"></script>
 <script>
-function getUsersFromMessages() {
-    const msgs = window.getAllMessages ? window.getAllMessages() : [];
-    const users = {};
-    msgs.forEach(msg => {
-        if(msg.from === 'user') {
-            users[msg.email] = msg.name;
-        }
-    });
-    return users;
-}
-
 function renderUserList() {
-    const users = getUsersFromMessages();
+    const users = window.getAllChatUsers ? window.getAllChatUsers() : [];
     const select = document.getElementById('chat-user-select');
     select.innerHTML = '';
-    Object.entries(users).forEach(([email, name]) => {
+    users.forEach(userId => {
         const opt = document.createElement('option');
-        opt.value = email;
-        opt.textContent = name + ' (' + email + ')';
+        opt.value = userId;
+        opt.textContent = userId;
         select.appendChild(opt);
     });
     if(select.options.length === 0) {
@@ -665,14 +654,14 @@ function renderUserList() {
 function renderChatBox() {
     const chatBox = document.getElementById('chat-box');
     const select = document.getElementById('chat-user-select');
-    const selectedEmail = select.value;
-    const msgs = window.getAllMessages ? window.getAllMessages() : [];
+    const selectedUserId = select.value;
+    const msgs = window.getChatMessages ? window.getChatMessages(selectedUserId) : [];
     chatBox.innerHTML = '';
-    msgs.filter(msg => msg.from === 'admin' || msg.email === selectedEmail).forEach(msg => {
-        if(msg.from === 'admin') {
-            chatBox.innerHTML += `<div style='text-align:right; margin-bottom:0.5rem;'><span style='background:#007bff; color:#fff; padding:0.3rem 0.7rem; border-radius:12px; display:inline-block;'>${msg.text}</span><br><span style='font-size:0.8em;color:#888;'>${msg.time}</span></div>`;
-        } else if(msg.email === selectedEmail) {
-            chatBox.innerHTML += `<div style='text-align:left; margin-bottom:0.5rem;'><span style='background:#eee; color:#333; padding:0.3rem 0.7rem; border-radius:12px; display:inline-block;'>${msg.text}</span><br><span style='font-size:0.8em;color:#888;'>${msg.time}</span></div>`;
+    msgs.forEach(msg => {
+        if(msg.sender === 'admin') {
+            chatBox.innerHTML += `<div style='text-align:right; margin-bottom:0.5rem;'><span style='background:#007bff; color:#fff; padding:0.3rem 0.7rem; border-radius:12px; display:inline-block;'>${msg.message}</span><br><span style='font-size:0.8em;color:#888;'>${msg.timestamp}</span></div>`;
+        } else if(msg.sender === 'user') {
+            chatBox.innerHTML += `<div style='text-align:left; margin-bottom:0.5rem;'><span style='background:#eee; color:#333; padding:0.3rem 0.7rem; border-radius:12px; display:inline-block;'>${msg.message}</span><br><span style='font-size:0.8em;color:#888;'>${msg.timestamp}</span></div>`;
         }
     });
     chatBox.scrollTop = chatBox.scrollHeight;
@@ -691,7 +680,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const input = document.getElementById('admin-reply-input');
         const select = document.getElementById('chat-user-select');
         if (input.value.trim() && select.value) {
-            window.sendAdminReply(input.value.trim());
+            window.sendAdminReply(select.value, input.value.trim());
             input.value = '';
         }
     });

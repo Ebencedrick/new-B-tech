@@ -571,82 +571,78 @@
       });
 
       // Store user info in localStorage for chat identity
-      function getUserChatIdentity() {
-          let name = localStorage.getItem('chatUserName');
-          let email = localStorage.getItem('chatUserEmail');
-          if (!name || !email) {
-              name = prompt('Enter your name for chat:') || 'User';
-              email = prompt('Enter your email for chat:') || 'user' + Math.floor(Math.random()*10000) + '@example.com';
-              localStorage.setItem('chatUserName', name);
-              localStorage.setItem('chatUserEmail', email);
-          }
-          return { name, email };
-      }
+      function getUserChatIdentity(forcePrompt = false) {
+    let name = localStorage.getItem('chatUserName');
+    let email = localStorage.getItem('chatUserEmail');
+    if (!name || !email || forcePrompt) {
+        document.getElementById('chat-identity-popup').style.display = 'block';
+        return null;
+    }
+    return { name, email };
+}
 
-      // Floating chat button logic
-      const chatBtn = document.getElementById('chat-float-btn');
-      const chatPopup = document.getElementById('user-chat-popup');
-      const closeChat = document.getElementById('close-user-chat');
-      const chatMessages = document.getElementById('user-chat-messages');
-      const chatForm = document.getElementById('user-chat-form');
-      const chatInput = document.getElementById('user-chat-input');
-      const chatIdentityPopup = document.getElementById('chat-identity-popup');
-      const chatIdentityForm = document.getElementById('chat-identity-form');
-      const cancelIdentityBtn = document.getElementById('cancel-identity-btn');
+const chatBtn = document.getElementById('chat-float-btn');
+const chatPopup = document.getElementById('user-chat-popup');
+const closeChat = document.getElementById('close-user-chat');
+const chatMessages = document.getElementById('user-chat-messages');
+const chatForm = document.getElementById('user-chat-form');
+const chatInput = document.getElementById('user-chat-input');
+const chatIdentityPopup = document.getElementById('chat-identity-popup');
+const chatIdentityForm = document.getElementById('chat-identity-form');
+const cancelIdentityBtn = document.getElementById('cancel-identity-btn');
 
-      function renderUserChat() {
-          const msgs = window.getAllMessages ? window.getAllMessages() : [];
-          const identity = getUserChatIdentity();
-          if (!identity) return;
-          const { email } = identity;
-          chatMessages.innerHTML = '';
-          msgs.filter(msg => msg.email === email || msg.from === 'admin').forEach(msg => {
-              if(msg.from === 'user' && msg.email === email) {
-                  chatMessages.innerHTML += `<div style='text-align:right; margin-bottom:0.5rem;'><span style='background:#007bff; color:#fff; padding:0.3rem 0.7rem; border-radius:12px; display:inline-block;'>${msg.text}</span><br><span style='font-size:0.8em;color:#888;'>${msg.time}</span></div>`;
-              } else if(msg.from === 'admin') {
-                  chatMessages.innerHTML += `<div style='text-align:left; margin-bottom:0.5rem;'><span style='background:#eee; color:#333; padding:0.3rem 0.7rem; border-radius:12px; display:inline-block;'>${msg.text}</span><br><span style='font-size:0.8em;color:#888;'>${msg.time}</span></div>`;
-              }
-          });
-          chatMessages.scrollTop = chatMessages.scrollHeight;
-      }
+function renderUserChat() {
+    const identity = getUserChatIdentity();
+    if (!identity) return;
+    const userId = identity.email.toLowerCase();
+    const msgs = window.getChatMessages ? window.getChatMessages(userId) : [];
+    chatMessages.innerHTML = '';
+    msgs.forEach(msg => {
+        if(msg.sender === 'user') {
+            chatMessages.innerHTML += `<div style='text-align:right; margin-bottom:0.5rem;'><span style='background:#007bff; color:#fff; padding:0.3rem 0.7rem; border-radius:12px; display:inline-block;'>${msg.message}</span><br><span style='font-size:0.8em;color:#888;'>${msg.timestamp}</span></div>`;
+        } else if(msg.sender === 'admin') {
+            chatMessages.innerHTML += `<div style='text-align:left; margin-bottom:0.5rem;'><span style='background:#eee; color:#333; padding:0.3rem 0.7rem; border-radius:12px; display:inline-block;'>${msg.message}</span><br><span style='font-size:0.8em;color:#888;'>${msg.timestamp}</span></div>`;
+        }
+    });
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
 
-      chatBtn.onclick = () => {
-          if (!getUserChatIdentity()) {
-              // Wait for identity form
-              chatPopup.style.display = 'none';
-          } else {
-              chatPopup.style.display = 'block';
-              renderUserChat();
-          }
-      };
-      closeChat.onclick = () => { chatPopup.style.display = 'none'; };
-      window.addEventListener('messagesUpdated', renderUserChat);
-      chatForm.onsubmit = function(e) {
-          e.preventDefault();
-          const identity = getUserChatIdentity();
-          if (!identity) return;
-          if(chatInput.value.trim()) {
-              window.sendUserMessage(identity.name, identity.email, chatInput.value.trim());
-              chatInput.value = '';
-              renderUserChat();
-          }
-      };
-      chatIdentityForm.onsubmit = function(e) {
-          e.preventDefault();
-          const name = document.getElementById('chat-identity-name').value.trim();
-          const email = document.getElementById('chat-identity-email').value.trim();
-          if(name && email) {
-              localStorage.setItem('chatUserName', name);
-              localStorage.setItem('chatUserEmail', email);
-              chatIdentityPopup.style.display = 'none';
-              chatPopup.style.display = 'block';
-              renderUserChat();
-          }
-      };
-      cancelIdentityBtn.onclick = function() {
-          chatIdentityPopup.style.display = 'none';
-      };
-      document.addEventListener('DOMContentLoaded', renderUserChat);
+chatBtn.onclick = () => {
+    if (!getUserChatIdentity()) {
+        chatPopup.style.display = 'none';
+    } else {
+        chatPopup.style.display = 'block';
+        renderUserChat();
+    }
+};
+closeChat.onclick = () => { chatPopup.style.display = 'none'; };
+window.addEventListener('messagesUpdated', renderUserChat);
+chatForm.onsubmit = function(e) {
+    e.preventDefault();
+    const identity = getUserChatIdentity();
+    if (!identity) return;
+    if(chatInput.value.trim()) {
+        window.sendUserMessage(identity.name, identity.email, chatInput.value.trim());
+        chatInput.value = '';
+        renderUserChat();
+    }
+};
+chatIdentityForm.onsubmit = function(e) {
+    e.preventDefault();
+    const name = document.getElementById('chat-identity-name').value.trim();
+    const email = document.getElementById('chat-identity-email').value.trim();
+    if(name && email) {
+        localStorage.setItem('chatUserName', name);
+        localStorage.setItem('chatUserEmail', email);
+        chatIdentityPopup.style.display = 'none';
+        chatPopup.style.display = 'block';
+        renderUserChat();
+    }
+};
+cancelIdentityBtn.onclick = function() {
+    chatIdentityPopup.style.display = 'none';
+};
+document.addEventListener('DOMContentLoaded', renderUserChat);
     </script>
     <script src="chat-sim.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>

@@ -1,25 +1,54 @@
 // Simple backend simulation for chat (for demo only)
 // In production, use a real backend (Node.js, Firebase, etc.)
 
-let messages = [
-  // Example: {from: 'user', name: 'John', email: 'john@example.com', text: 'Hello, admin!', time: '2025-05-21 10:00'}
-];
+// Simulated persistent chat data (in-memory JSON-like structure)
+let chatData = {
+  // userId: [ { sender: 'user'|'admin', message: '', timestamp: '' } ]
+};
 
-// Simulate sending a message from user
+// Helper to get userId (use email as unique id)
+function getUserId(name, email) {
+  return (email || '').toLowerCase();
+}
+
+// Load chat history for a user
+window.loadChatHistory = function(userId) {
+  return chatData[userId] ? [...chatData[userId]] : [];
+};
+
+// Send message from user
 window.sendUserMessage = function(name, email, text) {
-  messages.push({from: 'user', name, email, text, time: new Date().toLocaleString()});
-  window.dispatchEvent(new Event('messagesUpdated'));
+  const userId = getUserId(name, email);
+  if (!chatData[userId]) chatData[userId] = [];
+  chatData[userId].push({ sender: 'user', message: text, timestamp: new Date().toLocaleString() });
+  window.dispatchEvent(new CustomEvent('messagesUpdated', { detail: { userId } }));
 };
 
-// Simulate sending a message from admin
-window.sendAdminReply = function(text) {
-  messages.push({from: 'admin', name: 'Admin', email: 'admin@example.com', text, time: new Date().toLocaleString()});
-  window.dispatchEvent(new Event('messagesUpdated'));
+// Send message from admin
+window.sendAdminReply = function(userId, text) {
+  if (!chatData[userId]) chatData[userId] = [];
+  chatData[userId].push({ sender: 'admin', message: text, timestamp: new Date().toLocaleString() });
+  window.dispatchEvent(new CustomEvent('messagesUpdated', { detail: { userId } }));
 };
 
-// Get all messages
-window.getAllMessages = function() {
-  return messages;
+// Get all users
+window.getAllChatUsers = function() {
+  return Object.keys(chatData);
 };
 
-// Listen for updates: window.addEventListener('messagesUpdated', ...)
+// Get all messages for a user
+window.getChatMessages = function(userId) {
+  return chatData[userId] ? [...chatData[userId]] : [];
+};
+
+// Optionally: Load initial chat data from localStorage (simulate disk)
+if (localStorage.getItem('chatData')) {
+  try {
+    chatData = JSON.parse(localStorage.getItem('chatData'));
+  } catch (e) { chatData = {}; }
+}
+
+// Save chat data to localStorage on every update
+window.addEventListener('messagesUpdated', function() {
+  localStorage.setItem('chatData', JSON.stringify(chatData));
+});
