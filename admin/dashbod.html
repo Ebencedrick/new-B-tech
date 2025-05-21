@@ -52,12 +52,13 @@
             <nav>
                 <ul>
                     <li><a href="#dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="#profile"><i class="fas fa-user-circle"></i> Profile</a></li>
                     <li><a href="#properties"><i class="fas fa-building"></i> Manage Properties</a></li>
                     <li><a href="#users"><i class="fas fa-users"></i> Manage Users</a></li>
                     <li><a href="#agents"><i class="fas fa-user-tie"></i> Manage Agents</a></li>
                     <li><a href="#analytics"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                    <li><a href="#messages"><i class="fas fa-envelope"></i> Messages</a></li>
                     <li><a href="#settings"><i class="fas fa-cog"></i> Settings</a></li>
-                    <li><a href="#profile"><i class="fas fa-user-circle"></i> Profile</a></li>
                 </ul>
             </nav>
         </aside>
@@ -587,16 +588,15 @@
                     <div class="modal-content" style="background:#fff; padding:2rem; border-radius:10px; min-width:300px; max-width:90vw;">
                         <h2>Edit Profile</h2>
                         <form id="profile-form">
-                            <div style="display:flex; flex-direction:column; align-items:center; gap:1rem; margin-bottom:1rem;">
-                                <img id="edit-profile-img" src="../User/img/pablo.jpg" alt="Profile Picture" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #007bff;">
-                                <input type="file" id="profile-photo-input" accept="image/*" style="margin-top:0.5rem;" />
-                            </div>
                             <label for="profile-name">Name:</label>
                             <input type="text" id="profile-name" value="Admin Name" required style="width:100%; margin-bottom:1rem;" />
+
                             <label for="profile-email">Email:</label>
                             <input type="email" id="profile-email" value="admin@example.com" required style="width:100%; margin-bottom:1rem;" />
+
                             <label for="profile-role">Role:</label>
                             <input type="text" id="profile-role" value="Super Admin" required style="width:100%; margin-bottom:1rem;" />
+
                             <div style="display:flex; gap:1rem; justify-content:flex-end;">
                                 <button type="submit" style="background:#007bff; color:#fff; border:none; padding:0.5rem 1.5rem; border-radius:5px; cursor:pointer;">Save</button>
                                 <button type="button" id="cancel-edit-profile" style="background:#ccc; color:#333; border:none; padding:0.5rem 1.5rem; border-radius:5px; cursor:pointer;">Cancel</button>
@@ -609,7 +609,91 @@
                     <p>Welcome to your admin profile. Here you can view and update your personal information, change your password, and manage your account settings.</p>
                 </div>
             </section>
+
+            <section id="messages">
+                <h1><i class="fas fa-envelope"></i> Real-Time User Chat</h1>
+                <div class="messages-container" style="margin-top:2rem; max-width:700px; margin-left:auto; margin-right:auto; background:#fff; border-radius:10px; box-shadow:0 2px 16px rgba(0,0,0,0.15);">
+                    <div style="background:#007bff; color:#fff; padding:0.75rem 1rem; border-radius:10px 10px 0 0; display:flex; justify-content:space-between; align-items:center;">
+                        <span><i class="fas fa-user"></i> Chat with User</span>
+                        <div id="chat-users-list" style="margin:0;">
+                            <select id="chat-user-select" style="margin-left:0.5rem; padding:0.3rem 1rem; border-radius:5px; border:1px solid #fff; background:#fff; color:#333;">
+                            </select>
+                        </div>
+                    </div>
+                    <div id="chat-box" style="background:#f9f9f9; border:none; border-radius:0 0 0 0; padding:1rem; max-height:400px; min-height:200px; overflow-y:auto; margin-bottom:0.5rem;"></div>
+                    <form id="admin-reply-form" style="display:flex; gap:0.5rem; padding:0.75rem; border-top:1px solid #eee; background:#fafbfc; border-radius:0 0 10px 10px;">
+                        <input type="text" id="admin-reply-input" placeholder="Type a message..." style="flex:1; padding:0.5rem; border-radius:5px; border:1px solid #ccc;">
+                        <button type="submit" style="background:#007bff; color:#fff; border:none; border-radius:5px; padding:0.5rem 1rem; cursor:pointer;">Send</button>
+                    </form>
+                </div>
+            </section>
         </main>
     </div>
 </body>
 </html>
+<script src="../User/chat-sim.js"></script>
+<script>
+function getUsersFromMessages() {
+    const msgs = window.getAllMessages ? window.getAllMessages() : [];
+    const users = {};
+    msgs.forEach(msg => {
+        if(msg.from === 'user') {
+            users[msg.email] = msg.name;
+        }
+    });
+    return users;
+}
+
+function renderUserList() {
+    const users = getUsersFromMessages();
+    const select = document.getElementById('chat-user-select');
+    select.innerHTML = '';
+    Object.entries(users).forEach(([email, name]) => {
+        const opt = document.createElement('option');
+        opt.value = email;
+        opt.textContent = name + ' (' + email + ')';
+        select.appendChild(opt);
+    });
+    if(select.options.length === 0) {
+        const opt = document.createElement('option');
+        opt.value = '';
+        opt.textContent = 'No users yet';
+        select.appendChild(opt);
+    }
+}
+
+function renderChatBox() {
+    const chatBox = document.getElementById('chat-box');
+    const select = document.getElementById('chat-user-select');
+    const selectedEmail = select.value;
+    const msgs = window.getAllMessages ? window.getAllMessages() : [];
+    chatBox.innerHTML = '';
+    msgs.filter(msg => msg.from === 'admin' || msg.email === selectedEmail).forEach(msg => {
+        if(msg.from === 'admin') {
+            chatBox.innerHTML += `<div style='text-align:right; margin-bottom:0.5rem;'><span style='background:#007bff; color:#fff; padding:0.3rem 0.7rem; border-radius:12px; display:inline-block;'>${msg.text}</span><br><span style='font-size:0.8em;color:#888;'>${msg.time}</span></div>`;
+        } else if(msg.email === selectedEmail) {
+            chatBox.innerHTML += `<div style='text-align:left; margin-bottom:0.5rem;'><span style='background:#eee; color:#333; padding:0.3rem 0.7rem; border-radius:12px; display:inline-block;'>${msg.text}</span><br><span style='font-size:0.8em;color:#888;'>${msg.time}</span></div>`;
+        }
+    });
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+window.addEventListener('messagesUpdated', function() {
+    renderUserList();
+    renderChatBox();
+});
+document.addEventListener('DOMContentLoaded', function() {
+    renderUserList();
+    renderChatBox();
+    document.getElementById('chat-user-select').addEventListener('change', renderChatBox);
+    document.getElementById('admin-reply-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const input = document.getElementById('admin-reply-input');
+        const select = document.getElementById('chat-user-select');
+        if (input.value.trim() && select.value) {
+            window.sendAdminReply(input.value.trim());
+            input.value = '';
+        }
+    });
+});
+</script>

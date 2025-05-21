@@ -298,6 +298,35 @@
       </div>
     </div>
 
+    <!-- Floating Chat Icon -->
+    <div id="chat-float-btn" style="position:fixed; bottom:30px; right:30px; z-index:9999; background:#007bff; color:#fff; border-radius:50%; width:60px; height:60px; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.2); cursor:pointer;">
+        <i class="fas fa-comment-dots" style="font-size:2rem;"></i>
+    </div>
+    <!-- Chat Identity Popup -->
+    <div id="chat-identity-popup" style="display:none; position:fixed; bottom:110px; right:30px; width:320px; max-width:90vw; background:#fff; border-radius:10px; box-shadow:0 2px 16px rgba(0,0,0,0.25); z-index:10000;">
+        <form id="chat-identity-form" style="padding:1.5rem;">
+            <h3 style="margin-bottom:1rem; color:#007bff;">Start Chat</h3>
+            <input type="text" id="chat-identity-name" placeholder="Your Name" required style="width:100%; margin-bottom:1rem; padding:0.5rem; border-radius:5px; border:1px solid #ccc;">
+            <input type="email" id="chat-identity-email" placeholder="Your Email" required style="width:100%; margin-bottom:1rem; padding:0.5rem; border-radius:5px; border:1px solid #ccc;">
+            <div style="display:flex; gap:1rem; justify-content:flex-end;">
+                <button type="submit" style="background:#007bff; color:#fff; border:none; padding:0.5rem 1.5rem; border-radius:5px; cursor:pointer;">Continue</button>
+                <button type="button" id="cancel-identity-btn" style="background:#ccc; color:#333; border:none; padding:0.5rem 1.5rem; border-radius:5px; cursor:pointer;">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <!-- Chat Popup -->
+    <div id="user-chat-popup" style="display:none; position:fixed; bottom:100px; right:30px; width:320px; max-width:90vw; background:#fff; border-radius:10px; box-shadow:0 2px 16px rgba(0,0,0,0.25); z-index:10000;">
+        <div style="background:#007bff; color:#fff; padding:0.75rem 1rem; border-radius:10px 10px 0 0; display:flex; justify-content:space-between; align-items:center;">
+            <span><i class="fas fa-user-shield"></i> Chat with Admin</span>
+            <button id="close-user-chat" style="background:none; border:none; color:#fff; font-size:1.2rem; cursor:pointer;">&times;</button>
+        </div>
+        <div id="user-chat-messages" style="height:220px; overflow-y:auto; padding:1rem; background:#f9f9f9;"></div>
+        <form id="user-chat-form" style="display:flex; gap:0.5rem; padding:0.75rem; border-top:1px solid #eee;">
+            <input type="text" id="user-chat-input" placeholder="Type a message..." style="flex:1; padding:0.5rem; border-radius:5px; border:1px solid #ccc;">
+            <button type="submit" style="background:#007bff; color:#fff; border:none; border-radius:5px; padding:0.5rem 1rem; cursor:pointer;">Send</button>
+        </form>
+    </div>
+
     <footer class="footer-section">
       <div class="footer-container">
         <div class="footer-about">
@@ -540,6 +569,86 @@
           document.body.appendChild(contactFormPopup);
         });
       });
+
+      // Store user info in localStorage for chat identity
+      function getUserChatIdentity() {
+          let name = localStorage.getItem('chatUserName');
+          let email = localStorage.getItem('chatUserEmail');
+          if (!name || !email) {
+              name = prompt('Enter your name for chat:') || 'User';
+              email = prompt('Enter your email for chat:') || 'user' + Math.floor(Math.random()*10000) + '@example.com';
+              localStorage.setItem('chatUserName', name);
+              localStorage.setItem('chatUserEmail', email);
+          }
+          return { name, email };
+      }
+
+      // Floating chat button logic
+      const chatBtn = document.getElementById('chat-float-btn');
+      const chatPopup = document.getElementById('user-chat-popup');
+      const closeChat = document.getElementById('close-user-chat');
+      const chatMessages = document.getElementById('user-chat-messages');
+      const chatForm = document.getElementById('user-chat-form');
+      const chatInput = document.getElementById('user-chat-input');
+      const chatIdentityPopup = document.getElementById('chat-identity-popup');
+      const chatIdentityForm = document.getElementById('chat-identity-form');
+      const cancelIdentityBtn = document.getElementById('cancel-identity-btn');
+
+      function renderUserChat() {
+          const msgs = window.getAllMessages ? window.getAllMessages() : [];
+          const identity = getUserChatIdentity();
+          if (!identity) return;
+          const { email } = identity;
+          chatMessages.innerHTML = '';
+          msgs.filter(msg => msg.email === email || msg.from === 'admin').forEach(msg => {
+              if(msg.from === 'user' && msg.email === email) {
+                  chatMessages.innerHTML += `<div style='text-align:right; margin-bottom:0.5rem;'><span style='background:#007bff; color:#fff; padding:0.3rem 0.7rem; border-radius:12px; display:inline-block;'>${msg.text}</span><br><span style='font-size:0.8em;color:#888;'>${msg.time}</span></div>`;
+              } else if(msg.from === 'admin') {
+                  chatMessages.innerHTML += `<div style='text-align:left; margin-bottom:0.5rem;'><span style='background:#eee; color:#333; padding:0.3rem 0.7rem; border-radius:12px; display:inline-block;'>${msg.text}</span><br><span style='font-size:0.8em;color:#888;'>${msg.time}</span></div>`;
+              }
+          });
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      chatBtn.onclick = () => {
+          if (!getUserChatIdentity()) {
+              // Wait for identity form
+              chatPopup.style.display = 'none';
+          } else {
+              chatPopup.style.display = 'block';
+              renderUserChat();
+          }
+      };
+      closeChat.onclick = () => { chatPopup.style.display = 'none'; };
+      window.addEventListener('messagesUpdated', renderUserChat);
+      chatForm.onsubmit = function(e) {
+          e.preventDefault();
+          const identity = getUserChatIdentity();
+          if (!identity) return;
+          if(chatInput.value.trim()) {
+              window.sendUserMessage(identity.name, identity.email, chatInput.value.trim());
+              chatInput.value = '';
+              renderUserChat();
+          }
+      };
+      chatIdentityForm.onsubmit = function(e) {
+          e.preventDefault();
+          const name = document.getElementById('chat-identity-name').value.trim();
+          const email = document.getElementById('chat-identity-email').value.trim();
+          if(name && email) {
+              localStorage.setItem('chatUserName', name);
+              localStorage.setItem('chatUserEmail', email);
+              chatIdentityPopup.style.display = 'none';
+              chatPopup.style.display = 'block';
+              renderUserChat();
+          }
+      };
+      cancelIdentityBtn.onclick = function() {
+          chatIdentityPopup.style.display = 'none';
+      };
+      document.addEventListener('DOMContentLoaded', renderUserChat);
     </script>
+    <script src="chat-sim.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
   </body>
 </html>
