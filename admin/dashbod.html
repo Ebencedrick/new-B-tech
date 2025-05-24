@@ -94,38 +94,89 @@
                 
                 <div class="demo">
                     <h2>Recent Updates</h2>
-                    <ul id="recent-updates">
-                        <!-- Recent updates will be dynamically populated -->
-                    </ul>
+                    <div id="recent-updates-container" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;"></div>
                 </div>
             </section>
 
             <script>
                 const recentUpdates = [
-                    { section: 'Properties', update: 'Added a new property: Luxury Villa' },
-                    { section: 'Users', update: 'New user registered: John Doe' },
-                    { section: 'Agents', update: 'Agent approved: Alice Johnson' },
-                    { section: 'Analytics', update: 'Daily activities chart updated' },
+                    { section: 'Properties', update: 'Added a new property: Luxury Villa', icon: 'fa-building', color: '#007bff', active: false },
+                    { section: 'Users', update: 'New user registered: John Doe', icon: 'fa-user', color: '#28a745', active: false },
+                    { section: 'Agents', update: 'Agent approved: Alice Johnson', icon: 'fa-user-tie', color: '#ffc107', active: false },
+                    { section: 'Analytics', update: 'Daily activities chart updated', icon: 'fa-chart-line', color: '#17a2b8', active: false },
                 ];
 
-                // Populate Recent Updates
+                function setRecentUpdateActive(section) {
+                    const idx = recentUpdates.findIndex(u => u.section === section);
+                    if (idx !== -1) {
+                        recentUpdates[idx].active = true;
+                        populateRecentUpdates();
+                        setTimeout(() => {
+                            recentUpdates[idx].active = false;
+                            populateRecentUpdates();
+                        }, 2500); // Green dot visible for 2.5s
+                    }
+                }
+
+                // Populate Recent Updates in styled containers
                 function populateRecentUpdates() {
-                    const updatesList = document.getElementById('recent-updates');
-                    updatesList.innerHTML = '';
+                    const updatesContainer = document.getElementById('recent-updates-container');
+                    updatesContainer.innerHTML = '';
                     recentUpdates.forEach(update => {
-                        const li = document.createElement('li');
-                        li.textContent = `${update.section}: ${update.update}`;
-                        updatesList.appendChild(li);
+                        const card = document.createElement('div');
+                        card.style.background = '#fff';
+                        card.style.borderRadius = '10px';
+                        card.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+                        card.style.padding = '1.2rem 1.5rem';
+                        card.style.minWidth = '220px';
+                        card.style.flex = '1 1 220px';
+                        card.style.display = 'flex';
+                        card.style.alignItems = 'center';
+                        card.style.gap = '1rem';
+                        card.style.position = 'relative';
+                        card.innerHTML = `
+                            <div style="font-size:2em; color:${update.color}; position:relative;">
+                                <i class="fas ${update.icon}"></i>
+                                ${update.active ? '<span style="position:absolute;top:-0.3em;right:-0.3em;width:0.8em;height:0.8em;background:#28a745;border-radius:50%;border:2px solid #fff;display:inline-block;"></span>' : ''}
+                            </div>
+                            <div>
+                                <div style="font-weight:600; color:${update.color}; font-size:1.1em;">${update.section}</div>
+                                <div style="color:#333; margin-top:0.2em;">${update.update}</div>
+                            </div>
+                        `;
+                        updatesContainer.appendChild(card);
                     });
                 }
 
-                // Populate dashboard stats and updates on page load
+                // Add triggers for green dot on relevant actions
+                function addRecentUpdateTriggers() {
+                    // Property add
+                    const addPropertyForm = document.getElementById('add-property-form');
+                    if (addPropertyForm) {
+                        addPropertyForm.addEventListener('submit', function() {
+                            setRecentUpdateActive('Properties');
+                        });
+                    }
+                    // User register (simulate, as registration is not in this file)
+                    window.indicateNewUserRegistered = function() {
+                        setRecentUpdateActive('Users');
+                    };
+                    // Agent approve (simulate, as approval is not in this file)
+                    window.indicateAgentApproved = function() {
+                        setRecentUpdateActive('Agents');
+                    };
+                    // Analytics/statistics update (simulate)
+                    window.indicateStatsUpdated = function() {
+                        setRecentUpdateActive('Analytics');
+                    };
+                }
                 document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('total-properties').textContent = '120';
                     document.getElementById('total-users').textContent = '450';
                     document.getElementById('total-agents').textContent = '50';
                     document.getElementById('analysis-status').textContent = 'Active';
                     populateRecentUpdates();
+                    addRecentUpdateTriggers();
                 });
             </script>
 
@@ -321,9 +372,7 @@
 
                 <div class="demo">
                     <h2>User Reviews</h2>
-                    <ul id="user-reviews">
-                        <!-- User reviews will be dynamically populated -->
-                    </ul>
+                    <div id="user-reviews-container" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;"></div>
                 </div>
 
                 <div class="demo">
@@ -367,14 +416,29 @@
                     });
                 }
 
-                // Populate User Reviews
+                // Populate User Reviews in styled cards
                 function populateReviews() {
-                    const userReviews = document.getElementById('user-reviews');
+                    const userReviews = document.getElementById('user-reviews-container');
                     userReviews.innerHTML = '';
                     reviews.forEach(review => {
-                        const li = document.createElement('li');
-                        li.textContent = `User ID ${review.userId}: ${review.review}`;
-                        userReviews.appendChild(li);
+                        const card = document.createElement('div');
+                        card.style.background = '#fff';
+                        card.style.borderRadius = '10px';
+                        card.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+                        card.style.padding = '1.1rem 1.3rem';
+                        card.style.minWidth = '200px';
+                        card.style.flex = '1 1 220px';
+                        card.style.display = 'flex';
+                        card.style.alignItems = 'flex-start';
+                        card.style.gap = '1rem';
+                        card.innerHTML = `
+                            <div style="font-size:1.7em; color:#ffc107;"><i class="fas fa-quote-left"></i></div>
+                            <div>
+                                <div style="color:#333; font-size:1em; margin-bottom:0.4em;">${review.review}</div>
+                                <div style="font-size:0.95em; color:#888;">User ID: <span style='color:#007bff;font-weight:500;'>${review.userId}</span></div>
+                            </div>
+                        `;
+                        userReviews.appendChild(card);
                     });
                 }
 
@@ -571,6 +635,75 @@
                     <h2>Preferences</h2>
                     <p>Change theme, update profile, and manage notifications.</p>
                 </div>
+                <div class="admin-credentials-section" style="margin-top:2rem; background:#f8f9fa; padding:2rem 2.5rem; border-radius:12px; max-width:420px; box-shadow:0 2px 12px rgba(0,0,0,0.07);">
+                    <h2 style="margin-bottom:1.5rem; color:#007bff;">Change Admin Credentials</h2>
+                    <form id="admin-credentials-form">
+                        <div style="margin-bottom:1.2rem;">
+                            <label for="admin-new-name" style="font-weight:500;">New Name</label>
+                            <input type="text" id="admin-new-name" name="admin-new-name" placeholder="Enter new name" style="width:100%;margin-top:0.3rem;padding:0.6rem;border-radius:6px;border:1px solid #ccc;" />
+                        </div>
+                        <div style="margin-bottom:1.2rem;">
+                            <label for="admin-new-email" style="font-weight:500;">New Email</label>
+                            <input type="email" id="admin-new-email" name="admin-new-email" placeholder="Enter new email" style="width:100%;margin-top:0.3rem;padding:0.6rem;border-radius:6px;border:1px solid #ccc;" />
+                        </div>
+                        <div style="margin-bottom:1.2rem;">
+                            <label for="admin-new-photo" style="font-weight:500;">Profile Photo</label>
+                            <input type="file" id="admin-new-photo" name="admin-new-photo" accept="image/*" style="width:100%;margin-top:0.3rem;padding:0.6rem;border-radius:6px;border:1px solid #ccc;background:#fff;" />
+                        </div>
+                        <div style="margin-bottom:1.2rem; position:relative;">
+                            <label for="admin-current-password" style="font-weight:500;">Current Password</label>
+                            <input type="password" id="admin-current-password" name="admin-current-password" placeholder="Enter current password" style="width:100%;margin-top:0.3rem;padding:0.6rem 2.5rem 0.6rem 0.6rem;border-radius:6px;border:1px solid #ccc;" required />
+                            <button type="button" id="toggle-current-password" style="position:absolute;top:2.2rem;right:0.7rem;background:none;border:none;cursor:pointer;color:#007bff;font-size:1.1em;">Show</button>
+                        </div>
+                        <div style="margin-bottom:1.2rem; position:relative;">
+                            <label for="admin-new-password" style="font-weight:500;">New Password</label>
+                            <input type="password" id="admin-new-password" name="admin-new-password" placeholder="Enter new password" style="width:100%;margin-top:0.3rem;padding:0.6rem 2.5rem 0.6rem 0.6rem;border-radius:6px;border:1px solid #ccc;" />
+                            <button type="button" id="toggle-new-password" style="position:absolute;top:2.2rem;right:0.7rem;background:none;border:none;cursor:pointer;color:#007bff;font-size:1.1em;">Show</button>
+                        </div>
+                        <button type="submit" style="background:#007bff;color:#fff;border:none;padding:0.7rem 2rem;border-radius:6px;cursor:pointer;font-size:1.1em;">Update Credentials</button>
+                    </form>
+                    <div id="admin-credentials-message" style="margin-top:1.2rem;color:#28a745;font-weight:500;"></div>
+                </div>
+                <script>
+                function togglePassword(inputId, btnId) {
+                    const input = document.getElementById(inputId);
+                    const btn = document.getElementById(btnId);
+                    btn.addEventListener('click', function() {
+                        if (input.type === 'password') {
+                            input.type = 'text';
+                            btn.textContent = 'Hide';
+                        } else {
+                            input.type = 'password';
+                            btn.textContent = 'Show';
+                        }
+                    });
+                }
+                togglePassword('admin-current-password', 'toggle-current-password');
+                togglePassword('admin-new-password', 'toggle-new-password');
+                document.getElementById('admin-credentials-form').onsubmit = function(e) {
+                    e.preventDefault();
+                    const newName = document.getElementById('admin-new-name').value.trim();
+                    const newEmail = document.getElementById('admin-new-email').value.trim();
+                    const newPhotoInput = document.getElementById('admin-new-photo');
+                    if (newName) {
+                        document.querySelector('#profile h2').textContent = newName;
+                        document.querySelector('#profile-name').value = newName;
+                        document.querySelector('#profile .profile-container h2').textContent = newName;
+                    }
+                    if (newEmail) {
+                        document.querySelector('#profile p strong').nextSibling.textContent = ' ' + newEmail;
+                        document.querySelector('#profile-email').value = newEmail;
+                    }
+                    if (newPhotoInput.files && newPhotoInput.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            document.querySelector('#profile .profile-container img').src = e.target.result;
+                        };
+                        reader.readAsDataURL(newPhotoInput.files[0]);
+                    }
+                    document.getElementById('admin-credentials-message').textContent = 'Profile updated!';
+                };
+                </script>
             </section>
 
             <section id="profile">
@@ -582,6 +715,7 @@
                         <p style="margin-bottom: 0.5rem;"><strong>Email:</strong> admin@example.com</p>
                         <p style="margin-bottom: 0.5rem;"><strong>Role:</strong> Super Admin</p>
                         <button id="edit-profile-btn" style="padding: 0.5rem 1.5rem; background: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Edit Profile</button>
+                        <button id="logout-btn" style="margin-left: 1rem; padding: 0.5rem 1.5rem; background: #dc3545; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Logout</button>
                     </div>
                 </div>
                 <div id="edit-profile-modal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3); align-items:center; justify-content:center; z-index:1000;">
@@ -684,5 +818,86 @@ document.addEventListener('DOMContentLoaded', function() {
             input.value = '';
         }
     });
+    document.getElementById('edit-profile-btn').onclick = function() {
+        // Switch to settings section
+        document.querySelectorAll('.main-content section').forEach(section => section.style.display = 'none');
+        document.getElementById('settings').style.display = 'block';
+        // Highlight settings in sidebar
+        document.querySelectorAll('.sidebar nav ul li a').forEach(link => link.classList.remove('active'));
+        document.querySelector('.sidebar nav ul li a[href="#settings"]').classList.add('active');
+        // Optionally, scroll to credentials form
+        document.querySelector('.admin-credentials-section').scrollIntoView({ behavior: 'smooth' });
+    };
+    // Add logout button handler
+    var logoutBtn = document.getElementById('logout-btn');
+    var logoutModal = document.getElementById('logout-modal');
+    var logoutForm = document.getElementById('logout-form');
+    var logoutError = document.getElementById('logout-error');
+    var cancelLogout = document.getElementById('cancel-logout');
+    if (logoutBtn) {
+        logoutBtn.onclick = function() {
+            document.getElementById('logout-password').value = '';
+            logoutError.style.display = 'none';
+            logoutModal.style.display = 'flex';
+            // Focus the password input for better UX
+            setTimeout(function() {
+                document.getElementById('logout-password').focus();
+            }, 100);
+        };
+    }
+    if (cancelLogout) {
+        cancelLogout.onclick = function() {
+            logoutModal.style.display = 'none';
+        };
+    }
+    if (logoutForm) {
+        logoutForm.onsubmit = function(e) {
+            e.preventDefault();
+            var password = document.getElementById('logout-password').value;
+            // Use the current password from the settings form if available, else fallback
+            var correctPassword = document.getElementById('admin-current-password') && document.getElementById('admin-current-password').value ? document.getElementById('admin-current-password').value : 'admin123';
+            if (!password) {
+                logoutError.textContent = 'Password is required.';
+                logoutError.style.display = 'block';
+                return;
+            }
+            if (password === correctPassword || password === 'admin123') {
+                // Clear any session/local storage and reload
+                if(window.localStorage) localStorage.clear();
+                if(window.sessionStorage) sessionStorage.clear();
+                logoutModal.style.display = 'none';
+                setTimeout(function() { location.reload(); }, 300);
+            } else {
+                logoutError.textContent = 'Incorrect password. Please try again.';
+                logoutError.style.display = 'block';
+            }
+        };
+    }
 });
+// Add green dot to Messages nav when there are unread messages
+function setMessagesNavDot(show) {
+    const navLink = document.querySelector('.sidebar nav ul li a[href="#messages"]');
+    if (!navLink) return;
+    let dot = navLink.querySelector('.messages-dot');
+    if (show) {
+        if (!dot) {
+            dot = document.createElement('span');
+            dot.className = 'messages-dot';
+            dot.style.cssText = 'display:inline-block;position:absolute;top:8px;right:10px;width:10px;height:10px;background:#28a745;border-radius:50%;border:2px solid #fff;z-index:2;';
+            navLink.style.position = 'relative';
+            navLink.appendChild(dot);
+        }
+    } else if (dot) {
+        dot.remove();
+    }
+}
+
+// Simulate unread message detection (replace with real logic as needed)
+window.indicateUnreadMessage = function() {
+    setMessagesNavDot(true);
+    setTimeout(() => setMessagesNavDot(false), 2500); // Green dot visible for 2.5s
+};
+
+// Example: Call window.indicateUnreadMessage() when a new message arrives (admin or user side)
+// In real app, call this from your chat event handler for new/unread messages
 </script>

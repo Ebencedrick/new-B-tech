@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -114,7 +114,7 @@
           id="adminLoginButton"
           style="
             background: none;
-            border: none;
+            border:
             color: #2e86c1;
             cursor: pointer;
           "
@@ -153,7 +153,7 @@
         <div class="carousel-indicators">
           <button
             type="button"
-            data-bs-target="#carouselExampleIndicators"
+            data-bs-target="#carousel
             data-bs-slide-to="0"
             class="active"
             aria-current="true"
@@ -575,5 +575,60 @@
         <p>&copy; 2025 Real Estate Website. All rights reserved.</p>
       </div>
     </footer>
+    <!-- User Chat Section (hidden until authenticated) -->
+    <section
+      id="user-chat-section"
+      style="
+        display: none;
+        max-width: 600px;
+        margin: 2rem auto;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+        padding: 1rem;
+      "
+    >
+      <h3>Chat with Admin</h3>
+      <div
+        id="user-chat-box"
+        style="
+          background: #f9f9f9;
+          min-height: 200px;
+          max-height: 300px;
+          overflow-y: auto;
+          margin-bottom: 1rem;
+          padding: 1rem;
+          border-radius: 8px;
+        "
+      ></div>
+      <form id="user-chat-form" style="display: flex; gap: 0.5rem;">
+        <input
+          type="text"
+          id="user-chat-input"
+          placeholder="Type a message..."
+          style="
+            flex: 1;
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+          "
+        />
+        <button
+          type="submit"
+          style="
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+          "
+        >
+          Send
+        </button>
+      </form>
+    </section>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="auth-chat.js"></script>
   </body>
 </html>
